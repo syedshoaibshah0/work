@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ToDo App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="table.css">
+
+    <base href="" target="_blank">
+</head>
+
+<body>
+    <nav>
+        <a href="#" class="logo">ToDo App</a>
+        <div class="bx bx-menu" id="menu-icon"></div>
+
+        <ul class="nav-list">
+            <li><a href="">Home</a></li>
+            <li><a href="">About</a></li>
+            <li><a href="">Services</a></li>
+            <li><a href="">Blog</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+
+        <a href="" class="btn">search</a>
+    </nav>
+
+
+
+
+
+
+    <div class="login-box">
+        <form>
+            <div class="user-box">
+                <input for="title" type="text" name="" required="">
+                <label id="title">Title</label>
+            </div>
+            <div class="user-box">
+                <input for="Email" type="text" name="" required="">
+                <label id="Email">Email</label>
+            </div>
+            <div class="user-box">
+                <input for="desc" type="text" name="" required="">
+                <label id="desc"> Write A Message</label>
+            </div>
+            <div class="user-box">
+                <input for="date" type="date" ::-webkit-calendar-picker-indicator>
+                <label id="date">Date</label>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button class="btn btn-success" type="button" id="add">Add To List</button>
+                <br>
+                <button class="btn btn-danger" type="button" onclick="clearAll()">Clear Kardo</button>
+            </div>
+        </form>
+    </div>
+
+
+    <table class="container">
+        <thead>
+            <tr>
+                <th scope="col">
+                    <h1>#</h1>
+                </th>
+                <th scope="col">
+                    <h1>Title</h1>
+                </th>
+                <th scope="col">
+                    <h1>Email</h1>
+                </th>
+                <th scope="col">
+                    <h1>Description</h1>
+                </th>
+                <th scope="col">
+                    <h1>Date</h1>
+                </th>
+                <th scope="col">
+                    <h1>Action</h1>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="tablebody">
+            <tr>
+                <th scope="row">1</th>
+                <td>this is title</td>
+                <td>this is Email</td>
+                <td>this is a description</td>
+                <td>this is a date</td>
+                <td><button class="btn btn-danger" type="button">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <script>
+
+
+        add = document.getElementById("add");
+        add.addEventListener("click", addlist());
+
+        showdata();
+
+        function addlist() {
+
+            console.log("is working...")
+
+            title = document.getElementById("title").value;
+            Email = document.getElementById("Email").value;
+            desc = document.getElementById("desc").value;
+            Date = document.getElementById("Date").value;
+
+
+            if ((title & Email & desc & Date) == "") {
+
+                alert("plz fill all text fields");
+
+            } else {
+
+                if (localStorage.getItem("itemjson") == null) {
+
+                    itemJsonArray = []
+
+                    localStorage.setItem("itemjson", JSON.stringify(itemJsonArray))
+
+
+                } else {
+
+                    itemJsonArrayStr = localStorage.getItem("itemjson");
+
+                    itemJsonArray = JSON.parse(itemJsonArrayStr)
+
+                }
+
+
+            }
+           
+        }
+
+
+        function deleted(item) {
+
+            console.log("delete is working...")
+
+            itemJsonArrayStr = localStorage.getItem("itemJson");
+
+            itemJsonArray = JSON.parse(itemJsonArrayStr)
+
+            itemJsonArray.splice(item, 1)
+
+            localStorage.setItem("itemJson", JSON.stringify(itemJsonArray));
+
+            showdata();
+        }
+
+
+        function showdata() {
+
+            tablebody = document.getElementById("tablebody");
+
+            str = ""
+
+            itemJsonArray.forEach((element, index) )
+
+                str += `
+    <tr>
+    <th scope="row">${index + 1}</th>
+    <td>[0]</td>
+    <td>[1]</td>
+    <td>[2]</td>
+    <td>[3]</td>
+    <td><button class="btn btn-danger" type="button" onclick="deleted(${index})" >Delete</button></td>
+    </tr> 
+   `
+
+            
+
+            tablebody.innerHTML = str;
+
+        
+
+
+        }
+        
+
+        function clearAll() {
+
+                if (comfirm("are you sure you want to delete all ")) {
+                    console.log("is working...");
+
+                    localStorage.clear();
+
+                    showdata();
+                }
+            }
+        
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
